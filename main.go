@@ -1,72 +1,103 @@
+// Binary Tree in Golang
 package main
 
-import	"fmt"
+import (
+	"fmt"
+	"io"
+	"os"
+)
 
-
-type Tree struct {
-	Left *Tree
-	Value int
-	Right *Tree
+type BinaryNode struct {
+	left  *BinaryNode
+	right *BinaryNode
+	data  int64
 }
 
-func Walk(t *Tree, ch chan int)  {
-	if t == nil {
+type Profundidade struct {
+	iPrint
+}
+
+func (p Profundidade) print(w io.Writer, node *BinaryNode, ns int, ch rune) {
+	if node == nil {
 		return
 	}
 
-	Walk(t.Left, ch)
-	ch <- t.Value
-	Walk(t.Right, ch)
+	for i := 0; i < ns; i++ {
+		fmt.Fprint(w, " ")
+	}
+	fmt.Fprintf(w, "%c:%v\n", ch, node.data)
+	p.print(w, node.right, ns+2, 'R')
+	p.print(w, node.left, ns+2, 'L')
 }
 
-func Walker(t *Tree) <- chan int {
-	ch := make(chan int)
-	go func(){
-		Walk(t, ch)
-		close(ch)
-	}()
-
-	return ch
+type EmOrdem struct {
+	iPrint
 }
 
-func insert(t *Tree, v int) *Tree {
-	if t == nil {
-		return &Tree{nil, v, nil}
+func (e EmOrdem) print(w io.Writer, node *BinaryNode, ns int, ch rune) {
+	if node == nil {
+		return
 	}
-	if v < t.Value {
-		t.Left = insert(t.Left, v)
-		return t
+
+	for i := 0; i < ns; i++ {
+		fmt.Fprint(w, " ")
 	}
-	t.Right = insert(t.Right, v)
+
+	e.print(w, node.right, ns+2, 'R')
+	fmt.Fprintf(w, "%c:%v\n", ch, node.data)
+	e.print(w, node.left, ns+2, 'L')
+}
+
+type BinaryTree struct {
+	root *BinaryNode
+	iPrint
+}
+
+type iPrint interface {
+	print(w io.Writer, node *BinaryNode, ns int, ch rune)
+}
+
+func (t *BinaryTree) insert(data int64) *BinaryTree {
+	if t.root == nil {
+		t.root = &BinaryNode{data: data, left: nil, right: nil}
+	} else {
+		t.root.insert(data)
+	}
 	return t
 }
 
-func Reader(t1 *Tree) {
-	c1 := Walker(t1)
-	for {
-		v1 := <-c1
-		
-		if v1 == 0 { 
-			fmt.Println("Fim");
-			
-			break
+func (n *BinaryNode) insert(data int64) {
+	if n == nil {
+		return
+	} else if data <= n.data {
+		if n.left == nil {
+			n.left = &BinaryNode{data: data, left: nil, right: nil}
+		} else {
+			n.left.insert(data)
 		}
-
-		fmt.Println("Valor", v1);
+	} else {
+		if n.right == nil {
+			n.right = &BinaryNode{data: data, left: nil, right: nil}
+		} else {
+			n.right.insert(data)
+		}
 	}
 }
 
+func print(t *BinaryTree, objectPrinter iPrint) {
+
+	objectPrinter.print(os.Stdout, t.root, 0, 'M')
+}
+
 func main() {
+	tree := new(BinaryTree)
+	tree.insert(5).
+		insert(3).
+		insert(4).
+		insert(7).
+		insert(6).
+		insert(17).
+		insert(12)
 
-	fmt.Println("Comecou")
-
-	var t *Tree
-
-	t = insert(t, 1)
-	t = insert(t, 2)
-	t = insert(t, 3)
-	t = insert(t, 4)
-	t = insert(t, 5)
-
-	Reader(t)
+	print(tree, new(Profundidade))
 }
