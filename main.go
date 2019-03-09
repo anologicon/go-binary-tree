@@ -4,14 +4,11 @@ package main
 import (
 	"fmt"
 	"io"
+	"model"
 	"os"
 )
 
-type BinaryNode struct {
-	left  *BinaryNode
-	right *BinaryNode
-	data  int64
-}
+type BinaryNode = model.BinaryNode
 
 type Profundidade struct {
 	iPrint
@@ -25,9 +22,9 @@ func (p Profundidade) print(w io.Writer, node *BinaryNode, ns int, ch rune) {
 	for i := 0; i < ns; i++ {
 		fmt.Fprint(w, " ")
 	}
-	fmt.Fprintf(w, "%c:%v\n", ch, node.data)
-	p.print(w, node.right, ns+2, 'R')
-	p.print(w, node.left, ns+2, 'L')
+	fmt.Fprintf(w, "%c:%v\n", ch, node.Data)
+	p.print(w, node.Right, ns+2, 'R')
+	p.print(w, node.Left, ns+2, 'L')
 }
 
 type EmOrdem struct {
@@ -43,9 +40,9 @@ func (e EmOrdem) print(w io.Writer, node *BinaryNode, ns int, ch rune) {
 		fmt.Fprint(w, " ")
 	}
 
-	e.print(w, node.right, ns+2, 'R')
-	fmt.Fprintf(w, "%c:%v\n", ch, node.data)
-	e.print(w, node.left, ns+2, 'L')
+	e.print(w, node.Right, ns+2, 'R')
+	fmt.Fprintf(w, "%c:%v\n", ch, node.Data)
+	e.print(w, node.Left, ns+2, 'L')
 }
 
 type BinaryTree struct {
@@ -59,29 +56,11 @@ type iPrint interface {
 
 func (t *BinaryTree) insert(data int64) *BinaryTree {
 	if t.root == nil {
-		t.root = &BinaryNode{data: data, left: nil, right: nil}
+		t.root = &BinaryNode{Data: data, Left: nil, Right: nil}
 	} else {
-		t.root.insert(data)
+		t.root.Insert(data)
 	}
 	return t
-}
-
-func (n *BinaryNode) insert(data int64) {
-	if n == nil {
-		return
-	} else if data <= n.data {
-		if n.left == nil {
-			n.left = &BinaryNode{data: data, left: nil, right: nil}
-		} else {
-			n.left.insert(data)
-		}
-	} else {
-		if n.right == nil {
-			n.right = &BinaryNode{data: data, left: nil, right: nil}
-		} else {
-			n.right.insert(data)
-		}
-	}
 }
 
 func print(t *BinaryTree, objectPrinter iPrint) {
