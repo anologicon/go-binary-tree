@@ -2,10 +2,13 @@
 package main
 
 import (
+	"bufio"
+	"fmt"
+	"interfaces"
+	"strconv"
 	"model"
 	"model/search"
 	"os"
-	"interfaces"
 )
 
 // Print - metodo que executa a exibição dos dados
@@ -15,13 +18,47 @@ func Print(t *model.BinaryTree, objectPrinter interfaces.IPrint) {
 
 func main() {
 	tree := new(model.BinaryTree)
-	tree.Insert(5).
-		Insert(3).
-		Insert(4).
-		Insert(7).
-		Insert(6).
-		Insert(17).
-		Insert(12)
+
+	snr := bufio.NewScanner(os.Stdin)
+	enter := "Arvore Binaria em GOlang\n1 - Inserir dados\n2 - Remover dados\n3 - Imprimir\n4 - Sair\n"
+
+	for fmt.Println(enter); snr.Scan(); fmt.Println(enter) {
+
+		line := snr.Text()
+
+		switch line {
+			case "1":
+				fmt.Println("\n Digite o numero que deseja inserir\n");
+
+				snr.Scan()
+
+				numero := snr.Text()
+
+				numeroInteiro, err := strconv.ParseInt(numero, 10, 64)
+
+				if err != nil{
+					fmt.Fprintln(os.Stderr, "reading standard input:", err)
+				}
+
+				tree.Insert(numeroInteiro)
+
+				fmt.Println("\n\nImprimindo:\n");
+
+				Print(tree, search.Profundidade{})
+
+				fmt.Println("\n\n\n");
+
+			break
+			case "4":
+				fmt.Println("Fim");
+				os.Exit(0)
+			break
+			default:
+				fmt.Println(enter)
+		}
+
+
+	}
 
 	Print(tree, new(search.Profundidade))
 }
