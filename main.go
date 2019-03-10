@@ -2,9 +2,8 @@
 package main
 
 import (
-	"fmt"
-	"io"
 	"model"
+	"model/search"
 	"os"
 	"interfaces"
 )
@@ -12,45 +11,13 @@ import (
 // BinaryNode is a model for node
 type BinaryNode = model.BinaryNode
 
-// BinaryNode is a model for node
+// BinaryTree is a model for Tree
 type BinaryTree = model.BinaryTree
 
+// Profundidade is a model to aply the 'deep search'
+type Profundidade = search.Profundidade 
+
 type iPrint = interfaces.IPrint
-
-type Profundidade struct {
-	iPrint
-}
-
-func (p Profundidade) Print(w io.Writer, node *BinaryNode, ns int, ch rune) {
-	if node == nil {
-		return
-	}
-
-	for i := 0; i < ns; i++ {
-		fmt.Fprint(w, " ")
-	}
-	fmt.Fprintf(w, "%c:%v\n", ch, node.Data)
-	p.Print(w, node.Right, ns+2, 'R')
-	p.Print(w, node.Left, ns+2, 'L')
-}
-
-type EmOrdem struct {
-	iPrint
-}
-
-func (e EmOrdem) print(w io.Writer, node *BinaryNode, ns int, ch rune) {
-	if node == nil {
-		return
-	}
-
-	for i := 0; i < ns; i++ {
-		fmt.Fprint(w, " ")
-	}
-
-	e.print(w, node.Right, ns+2, 'R')
-	fmt.Fprintf(w, "%c:%v\n", ch, node.Data)
-	e.print(w, node.Left, ns+2, 'L')
-}
 
 func print(t *BinaryTree, objectPrinter iPrint) {
 
