@@ -6,15 +6,22 @@ import (
 	"io"
 	"model"
 	"os"
+	"interfaces"
 )
 
+// BinaryNode is a model for node
 type BinaryNode = model.BinaryNode
+
+// BinaryNode is a model for node
+type BinaryTree = model.BinaryTree
+
+type iPrint = interfaces.IPrint
 
 type Profundidade struct {
 	iPrint
 }
 
-func (p Profundidade) print(w io.Writer, node *BinaryNode, ns int, ch rune) {
+func (p Profundidade) Print(w io.Writer, node *BinaryNode, ns int, ch rune) {
 	if node == nil {
 		return
 	}
@@ -23,8 +30,8 @@ func (p Profundidade) print(w io.Writer, node *BinaryNode, ns int, ch rune) {
 		fmt.Fprint(w, " ")
 	}
 	fmt.Fprintf(w, "%c:%v\n", ch, node.Data)
-	p.print(w, node.Right, ns+2, 'R')
-	p.print(w, node.Left, ns+2, 'L')
+	p.Print(w, node.Right, ns+2, 'R')
+	p.Print(w, node.Left, ns+2, 'L')
 }
 
 type EmOrdem struct {
@@ -45,38 +52,20 @@ func (e EmOrdem) print(w io.Writer, node *BinaryNode, ns int, ch rune) {
 	e.print(w, node.Left, ns+2, 'L')
 }
 
-type BinaryTree struct {
-	root *BinaryNode
-	iPrint
-}
-
-type iPrint interface {
-	print(w io.Writer, node *BinaryNode, ns int, ch rune)
-}
-
-func (t *BinaryTree) insert(data int64) *BinaryTree {
-	if t.root == nil {
-		t.root = &BinaryNode{Data: data, Left: nil, Right: nil}
-	} else {
-		t.root.Insert(data)
-	}
-	return t
-}
-
 func print(t *BinaryTree, objectPrinter iPrint) {
 
-	objectPrinter.print(os.Stdout, t.root, 0, 'M')
+	objectPrinter.Print(os.Stdout, t.Root, 0, 'M')
 }
 
 func main() {
 	tree := new(BinaryTree)
-	tree.insert(5).
-		insert(3).
-		insert(4).
-		insert(7).
-		insert(6).
-		insert(17).
-		insert(12)
+	tree.Insert(5).
+		Insert(3).
+		Insert(4).
+		Insert(7).
+		Insert(6).
+		Insert(17).
+		Insert(12)
 
 	print(tree, new(Profundidade))
 }
