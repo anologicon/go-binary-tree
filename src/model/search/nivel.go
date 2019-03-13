@@ -24,10 +24,12 @@ func (p Nivel) Print(w io.Writer, node *model.BinaryNode, ns int, ch rune) {
 		fmt.Println(atual.Data, "\n")
 
 		if (atual.Left != nil) {
+			fmt.Println("Tem esquerda")
 			fila = append(fila, atual.Left)
 		}
 
 		if (atual.Right != nil) {
+			fmt.Println("Tem direita")
 			fila = append(fila, atual.Right)
 		}
 	}

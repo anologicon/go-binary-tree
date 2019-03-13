@@ -5,10 +5,10 @@ import (
 	"bufio"
 	"fmt"
 	"interfaces"
-	"strconv"
 	"model"
 	"model/search"
 	"os"
+	"strconv"
 )
 
 // Print - metodo que executa a exibição dos dados
@@ -27,36 +27,36 @@ func main() {
 		line := snr.Text()
 
 		switch line {
-			case "1":
-				fmt.Println("\n Digite o numero que deseja inserir\n");
+		case "1":
+			fmt.Println("\n Digite o numero que deseja inserir\n")
 
-				snr.Scan()
+			snr.Scan()
 
-				numero := snr.Text()
+			numero := snr.Text()
 
-				numeroInteiro, err := strconv.ParseInt(numero, 10, 64)
+			numeroInteiro, err := strconv.ParseInt(numero, 10, 64)
 
-				if err != nil{
-					fmt.Fprintln(os.Stderr, "reading standard input:", err)
-				}
+			if err != nil {
+				fmt.Fprintln(os.Stderr, "reading standard input:", err)
+			}
 
-				tree.Insert(numeroInteiro)
+			tree.Insert(numeroInteiro)
+			break
+		case "3":
+			fmt.Println("\n\nImprimindo:\n")
 
-				fmt.Println("\n\nImprimindo:\n");
+			Print(tree, search.Nivel{})
 
-				Print(tree, search.Nivel{})
-
-				fmt.Println("\n\n\n");
+			fmt.Println("\n\n\n")
 
 			break
-			case "4":
-				fmt.Println("Fim");
-				os.Exit(0)
+		case "4":
+			fmt.Println("Fim")
+			os.Exit(0)
 			break
-			default:
-				fmt.Println(enter)
+		default:
+			fmt.Println(enter)
 		}
-
 
 	}
 
