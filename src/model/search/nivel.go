@@ -10,15 +10,16 @@ type Nivel struct {
 	IPrint interface{}
 }
 
-
 // Print - Metodo para ordernar a busca por profundidade
 func (p Nivel) Print(w io.Writer, node *model.BinaryNode, ns int, ch rune) {
-	var	fila []*model.BinaryNode
-	
+	fila := make([]*model.BinaryNode, 0)
 	fila = append(fila, node)
 	
-	for len(fila) != 0{
-		atual := fila[0]
+	var atual *model.BinaryNode;
+	
+	for len(fila) != 0 {
+
+		atual, fila = fila[len(fila)-1], fila[:len(fila)-1]
 
 		fmt.Println(atual.Data, "\n")
 

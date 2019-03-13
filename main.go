@@ -44,7 +44,7 @@ func main() {
 
 				fmt.Println("\n\nImprimindo:\n");
 
-				Print(tree, search.Profundidade{})
+				Print(tree, search.Nivel{})
 
 				fmt.Println("\n\n\n");
 
