@@ -6,7 +6,6 @@ import (
 	"model"
 )
 
-
 type EmOrdem struct {
 	IPrint interface{}
 }
