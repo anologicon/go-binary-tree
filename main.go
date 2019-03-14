@@ -21,7 +21,7 @@ func remover(n *model.BinaryNode, data int64) *model.BinaryNode {
 		return n;
 	}
 
-	if (data < n.Data) {
+	if (data < n.Data) {	
 		n.Left = remover(n.Left, data);
 	} else if (data > n.Data) {
 		n.Right = remover(n.Right, data);
