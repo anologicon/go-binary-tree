@@ -10,10 +10,10 @@ type Nivel struct {
 	IPrint interface{}
 }
 
-// Print - Metodo para ordernar a busca por profundidade
+// Print - Metodo para ordernar a busca por nivel
 func (p Nivel) Print(w io.Writer, node *model.BinaryNode, ns int, ch rune) {
 	
-	fila := make([]*model.BinaryNode, 0)
+	var fila []*model.BinaryNode;
 
 	fila = append(fila, node)
 	
@@ -21,16 +21,18 @@ func (p Nivel) Print(w io.Writer, node *model.BinaryNode, ns int, ch rune) {
 	
 	for len(fila) != 0 {
 
-		atual, fila = fila[len(fila)-1], fila[:len(fila)-1]
+		// This is a pop slice
+		atual, fila = fila[0], fila[1:]
 		
-		fmt.Println(atual.Data)
+		fmt.Println(atual.Data);
 		
-		if (atual.Right != nil) {
-			fila = append(fila, atual.Right)
-		}
-
 		if (atual.Left != nil) {
 			fila = append(fila, atual.Left)
 		}
+
+		if (atual.Right != nil) {
+			fila = append(fila, atual.Right)
+		}
+		
 	}
 }
