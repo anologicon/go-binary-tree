@@ -61,21 +61,21 @@ func main() {
 	snr := bufio.NewScanner(os.Stdin)
 	enter := "Arvore Binaria em GOlang\n2 - Remover dados\n3 - Imprimir Largura\n6 - Imprimir Profundidade\n4 - Sair\n"
 
-	for fmt.Println(enter); snr.Scan(); fmt.Println(enter) {
+	tree.Insert(5);
+	tree.Insert(3);
+	tree.Insert(7);
+	tree.Insert(4);
+	tree.Insert(6);
+	tree.Insert(17);
+	tree.Insert(12);
 
-		tree.Insert(5);
-		tree.Insert(3);
-		tree.Insert(7);
-		tree.Insert(4);
-		tree.Insert(6);
-		tree.Insert(17);
-		tree.Insert(12);
+	for fmt.Println(enter); snr.Scan(); fmt.Println(enter) {
 		
 		line := snr.Text()
 
 		switch line {
 		case "2":
-			fmt.Println("\n Digite o numero que deseja inserir\n")
+			fmt.Println("\n Digite o numero que deseja remover\n")
 
 			snr.Scan()
 
@@ -93,7 +93,9 @@ func main() {
 		case "3":
 			fmt.Println("\n\nImprimindo Nivel:\n")
 
-			novaArvore := tree;
+			var novaArvore *model.BinaryTree;
+
+			novaArvore = tree;	
 
 			Print(novaArvore, search.Nivel{})
 
