@@ -17,7 +17,7 @@ func (t *BinaryTree) Insert(data int64) *BinaryTree {
 	return t
 }
 
-
+// Remover - Remove um valor da arvore
 func (t *BinaryTree) Remover(n *BinaryNode, data int64) *BinaryNode {
 	if(n == nil) {
 		return n;
