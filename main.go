@@ -16,44 +16,6 @@ func Print(t *model.BinaryTree, objectPrinter interfaces.IPrint) {
 	objectPrinter.Print(os.Stdout, t.Root, 0, 'M')
 }
 
-func remover(n *model.BinaryNode, data int64) *model.BinaryNode {
-	if(n == nil) {
-		return n;
-	}
-
-	if (data < n.Data) {
-		n.Left = remover(n.Left, data);
-	} else if (data > n.Data) {
-		n.Right = remover(n.Right, data);
-	} else {
-		if(n.Left == nil) {
-			return n.Right;
-		}
-	
-		if (n.Right == nil) {
-			return n.Left;
-		}
-
-		n.Data = menorValor(n.Right);
-
-		n.Right = remover(n.Right, n.Right.Data);
-	}
-
-	return n;
-}
-
-func menorValor(n *model.BinaryNode) int64  {
-	var minimo int64;
-
-	minimo = n.Data;
-
-	for n.Left != nil {
-		minimo = n.Left.Data;
-		n = n.Left;
-	}
-
-	return minimo;
-}
 
 func main() {
 	tree := new(model.BinaryTree)
@@ -87,7 +49,7 @@ func main() {
 				fmt.Fprintln(os.Stderr, "reading standard input:", err)
 			}
 
-			remover(tree.Root, numeroInteiro)
+			tree.Remover(tree.Root, numeroInteiro);
 
 			break
 		case "3":

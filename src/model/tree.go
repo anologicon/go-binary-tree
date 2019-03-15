@@ -16,3 +16,43 @@ func (t *BinaryTree) Insert(data int64) *BinaryTree {
 	}
 	return t
 }
+
+
+func (t *BinaryTree) Remover(n *BinaryNode, data int64) *BinaryNode {
+	if(n == nil) {
+		return n;
+	}
+
+	if (data < n.Data) {	
+		n.Left = t.Remover(n.Left, data);
+	} else if (data > n.Data) {
+		n.Right = t.Remover(n.Right, data);
+	} else {
+		if(n.Left == nil) {
+			
+			return n.Right;
+
+		} else if (n.Right == nil) {
+			return n.Left;
+		}
+
+		n.Data = menorValor(n.Right);
+
+		n.Right = t.Remover(n.Right, n.Data);
+	}
+
+	return n;
+}
+
+func menorValor(n *BinaryNode) int64  {
+	var minimo int64;
+
+	minimo = n.Data;
+
+	for n.Left != nil {
+		minimo = n.Left.Data;
+		n = n.Left;
+	}
+
+	return minimo;
+}
