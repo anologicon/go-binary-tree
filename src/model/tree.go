@@ -29,16 +29,16 @@ func (t *BinaryTree) Remover(n *BinaryNode, data int64) *BinaryNode {
 		n.Right = t.Remover(n.Right, data);
 	} else {
 		if(n.Left == nil) {
+			
 			return n.Right;
-		}
-	
-		if (n.Right == nil) {
+
+		} else if (n.Right == nil) {
 			return n.Left;
 		}
 
 		n.Data = menorValor(n.Right);
 
-		n.Right = t.Remover(n.Right, n.Right.Data);
+		n.Right = t.Remover(n.Right, n.Data);
 	}
 
 	return n;
