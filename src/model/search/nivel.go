@@ -11,9 +11,7 @@ type Nivel struct {
 	IPrint interface{}
 }
 
-// Print - Metodo para ordernar a busca por nivel
-
-/** Print -
+/** Print - Metodo de busca por nivel
  * Recebe alem de varios dados que são meio desnecessarios. Um nodo raiz
  * 
  * var fila [] é um slice do tipo *BinaryNode;
@@ -50,7 +48,7 @@ type Nivel struct {
  *
  * imprime atual Valor
  *
- * Essa é a ideia, vamos inserindo na fila e exibindo pela ordem inserido.
+ * Essa é a ideia, vamos inserindo na fila e exibindo pela ordem inserida.
  * 
 */
 func (p Nivel) Print(w io.Writer, node *model.BinaryNode, ns int, ch rune) {
