@@ -55,13 +55,9 @@ func main() {
 		case "3":
 			fmt.Println("\n\nImprimindo Nivel:\n")
 
-			var novaArvore *model.BinaryTree;
+			Print(tree, search.Nivel{})
 
-			novaArvore = tree;	
-
-			Print(novaArvore, search.Nivel{})
-
-			fmt.Println("\n\n\n")
+ 			fmt.Println("\n\n\n")
 
 			break
 		case "6":
