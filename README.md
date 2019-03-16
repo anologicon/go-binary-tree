@@ -6,4 +6,6 @@ A binary tree with GO<br>
 
 /src/model/search/nivel.go
 
+## Remover
 
+/src/tree.go
